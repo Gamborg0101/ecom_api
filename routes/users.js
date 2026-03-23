@@ -7,6 +7,8 @@ router.get("/", (req, res) => {
   res.send("Users list");
 });
 router.get("/new", (req, res) => {
+  console.log(req.query.name);
+
   res.render("users/new", { firstName: "Test" });
 });
 
