@@ -7,11 +7,20 @@ router.get("/", (req, res) => {
   res.send("Users list");
 });
 router.get("/new", (req, res) => {
-  res.send("User New Form");
+  res.render("users/new", { firstName: "Test" });
 });
 
+const users = [{ firstName: "Kyle" }, { firstName: "Casper" }];
+
 router.post("/", (req, res) => {
-  res.send("Create user");
+  const isValid = true;
+  if (isValid) {
+    users.push({ firstName: req.body.firstName });
+    res.redirect(`/users/${users.length - 1}`);
+  } else {
+    console.log("Error");
+    res.render("users/new", { firstName: req.body.firstName });
+  }
 });
 
 router
@@ -26,7 +35,6 @@ router
     res.send(`Delete User With ID ${req.params.id}`);
   });
 
-const users = [{ name: "Kyle" }, { name: "Casper" }];
 router.param("id", (req, res, next, id) => {
   req.user = users[id];
   next();
