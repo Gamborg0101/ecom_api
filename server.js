@@ -11,4 +11,13 @@ const userRouter = require("./routes/users");
 
 app.use("/users", userRouter);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
 app.listen(3000);
